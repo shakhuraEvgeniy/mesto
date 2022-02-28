@@ -5,4 +5,11 @@
   background-size: contain;
   background-repeat: no-repeat;
   border-radius: 50%;
+  flex-shrink: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .profile__avatar{
+    margin: auto;
+  }
 }

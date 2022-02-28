@@ -1,0 +1,9 @@
+.profile__name-edit{
+  display: flex;
+}
+
+@media screen and (max-width: 768px) {
+  .profile__name-edit{
+    margin: auto;
+  }
+}

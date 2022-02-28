@@ -1,6 +1,12 @@
 .profile__info{
+  flex-direction: column;
   display: flex;
   margin: 22px 0 0 30px;
-  max-width: 336px;
-  flex-wrap: wrap;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 768px) {
+  .profile__info{
+    margin-left: 0;
+  }
 }
