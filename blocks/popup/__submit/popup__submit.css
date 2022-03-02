@@ -10,6 +10,10 @@
   opacity: 1;
   transition: opacity .5s ease;
   cursor: pointer;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
 }
 
 
@@ -17,3 +21,10 @@
   opacity: 0.6
 }
 
+@media screen and (max-width: 880px) {
+  .popup__submit{
+    width: 238px;
+    height: 46px;
+    margin-top: 45px;
+  }
+}
