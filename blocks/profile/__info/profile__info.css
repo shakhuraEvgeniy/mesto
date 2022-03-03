@@ -1,8 +1,9 @@
 .profile__info{
-  flex-direction: column;
-  display: flex;
+  display: grid;
   margin: 22px 0 0 30px;
   overflow: hidden;
+  grid-template-columns: auto 150px;
+  grid-template-rows: 55px auto;
 }
 
 @media screen and (max-width: 768px) {
