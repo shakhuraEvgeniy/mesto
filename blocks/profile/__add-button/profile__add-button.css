@@ -5,7 +5,7 @@
   box-sizing: border-box;
   border-radius: 2px;
   background-color: transparent;
-  background-image: url(../../../images/plus.png);
+  background-image: url(../../../images/plus.svg);
   background-size: 22px 22px;
   background-repeat: no-repeat;
   background-position: center;
@@ -14,7 +14,6 @@
   cursor: pointer;
   opacity: 1;
   transition: opacity .5s ease;
-  flex-shrink: 0;
 }
 
 .profile__add-button:hover{
@@ -24,6 +23,7 @@
 @media screen and (max-width: 768px) {
   .profile__add-button{
     width: 282px;
-    margin: 36px auto 0;
+    margin: 33px auto 0;
+    background-size: 16px 16px;
   }
 }

@@ -1,13 +1,16 @@
 .profile__info{
   display: grid;
   margin: 22px 0 0 30px;
-  overflow: hidden;
   grid-template-columns: auto 150px;
   grid-template-rows: 55px auto;
 }
 
 @media screen and (max-width: 768px) {
   .profile__info{
+    margin-top: 27px;
     margin-left: 0;
+    grid-template-columns: auto auto;
+    grid-template-rows: 33px auto;
+    justify-content: center;
   }
 }

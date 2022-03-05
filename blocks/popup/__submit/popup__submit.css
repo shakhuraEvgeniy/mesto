@@ -12,19 +12,20 @@
   cursor: pointer;
   font-style: normal;
   font-weight: 400;
-  font-size: 14px;
-  line-height: 17px;
+  font-size: 18px;
+  line-height: 22px;
 }
 
 
 .popup__submit:hover{
-  opacity: 0.6;
+  opacity: 0.8;
 }
 
 @media screen and (max-width: 880px) {
   .popup__submit{
-    width: 238px;
     height: 46px;
     margin-top: 45px;
+    font-size: 14px;
+    line-height: 17px;
   }
 }

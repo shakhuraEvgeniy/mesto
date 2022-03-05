@@ -1,12 +1,12 @@
 .card__heart{
-  background-image: url(../../../images/heart.png);
+  background-image: url(../../../images/heart.svg);
   background-color: transparent;
+  background-repeat: no-repeat;
   border: none;
   width: 22px;
   height: 19px;
   background-size: contain;
   align-self: center;
-  flex-shrink: 0;
   margin-left: 21px;
   opacity: 1;
   transition: opacity .5s ease;
@@ -15,5 +15,5 @@
 
 
 .card__heart:hover{
-  opacity: 0.6;
+  opacity: 0.5;
 }

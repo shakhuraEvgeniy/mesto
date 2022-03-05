@@ -1,3 +1,5 @@
-.card__photo{
+.card__photo {
   max-width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
 }

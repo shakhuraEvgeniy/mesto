@@ -8,3 +8,8 @@
 }
 
 
+@media screen and (max-width: 768px) {
+  .cards{
+    margin-top: 36px;
+  }
+}

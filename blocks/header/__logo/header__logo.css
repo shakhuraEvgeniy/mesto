@@ -2,7 +2,7 @@
   display: block;
   width: 142px;
   height: 33px;
-  background-image: url(../../../images/logo.png);
+  background-image: url(../../../images/logo.svg);
   background-repeat: no-repeat;
   background-size: contain;
   cursor: pointer;
@@ -10,7 +10,7 @@
 
 @media screen and (max-width: 880px) {
   .header__logo{
-    width: 142px;
-    height: 33px;
+    width: 103.74px;
+    height: 24.4px;
   }
 }
