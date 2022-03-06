@@ -1,5 +1,5 @@
 let popup = document.querySelector('.popup');
-let formElement = popup.querySelector('.formElement')
+let formElement = popup.querySelector('.popup__form')
 const editName = document.querySelector('.profile__edit-button');
 const closePopup = popup.querySelector('.popup__close');
 let nameInput = popup.querySelector('.popup__input_type_name');

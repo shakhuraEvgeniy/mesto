@@ -6,6 +6,12 @@
   background-repeat: no-repeat;
   background-size: contain;
   cursor: pointer;
+  opacity: 1;
+  transition: opacity .5s ease;
+}
+
+.header__logo:hover{
+  opacity: .6;
 }
 
 @media screen and (max-width: 880px) {

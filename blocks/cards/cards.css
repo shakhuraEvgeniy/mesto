@@ -3,21 +3,14 @@
   display: grid;
   margin: 51px auto 0;
   grid-template-columns: repeat(auto-fit, 282px);
+  justify-content: center;
   gap: 20px 17px;
   padding: 0 19px;
 }
 
 
-@media screen and (max-width: 917px) {
+@media screen and (max-width: 768px) {
   .cards{
-    max-width: 581px;
-    margin-top: 36px;
-  }
-}
-
-@media screen and (max-width: 618px) {
-  .cards{
-    max-width: 282px;
     margin-top: 36px;
   }
 }
