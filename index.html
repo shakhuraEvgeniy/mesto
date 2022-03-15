@@ -25,50 +25,8 @@
       <button class="profile__add-button" aria-label="Добавить место" type="button"></button>
     </section>
 
-    <section class="cards">
-      <article class="card">
-        <img src="./images/klim-musalimov-y_z4dpT4TKM-unsplash.jpg" alt="МГУ" class="card__photo">
-        <div class="card__group">
-          <h2 class="card__caption">Москва</h2>
-          <button class="card__heart" type="button"></button>
-        </div>
-      </article>
-      <article class="card">
-        <img src="./images/Elbrus.png" alt="Эльбрус" class="card__photo">
-        <div class="card__group">
-          <h2 class="card__caption">Гора Эльбрус</h2>
-          <button class="card__heart" type="button"></button>
-        </div>
-      </article>
-      <article class="card">
-        <img src="./images/Dombay.png" alt="Домбай" class="card__photo">
-        <div class="card__group">
-          <h2 class="card__caption">Домбай</h2>
-          <button class="card__heart" type="button"></button>
-        </div>
-      </article>
-      <article class="card">
-        <img src="./images/Elbrus.png" alt="Эльбрус" class="card__photo">
-        <div class="card__group">
-          <h2 class="card__caption">Гора Эльбрус</h2>
-          <button class="card__heart" type="button"></button>
-        </div>
-      </article>
-      <article class="card">
-        <img src="./images/Dombay.png" alt="Домбай" class="card__photo">
-        <div class="card__group">
-          <h2 class="card__caption">Домбай</h2>
-          <button class="card__heart" type="button"></button>
-        </div>
-      </article>
-      <article class="card">
-        <img src="./images/Karachaevsk.jpg" alt="Карачаевск" class="card__photo">
-        <div class="card__group">
-          <h2 class="card__caption">Карачаево-Черкессия</h2>
-          <button class="card__heart" type="button"></button>
-        </div>
-      </article>
-    </section>
+    <section class="cards"></section>
+
   </main>
 
   <footer class="footer">
@@ -86,6 +44,16 @@
       </form>
     </div>
   </div>
+  <template class="card-template">
+    <article class="card">
+      <img src="" alt="" class="card__photo">
+      <button class="card__delete" type="button"></button>
+      <div class="card__group">
+        <h2 class="card__caption"></h2>
+        <button class="card__heart" type="button"></button>
+      </div>
+    </article>
+  </template>
   <script src="./scripts/index.js"></script>
 </body>
 
