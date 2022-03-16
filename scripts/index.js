@@ -71,8 +71,14 @@ function removeCard(event) {
   card.remove();
 }
 
+function likeCard(event) {
+  const heart = event.currentTarget.closest(".card__heart");
+  heart.classList.toggle("card__heart_active");
+}
+
 function setCardActionsListener(card) {
   card.querySelector(".card__delete").addEventListener("click", removeCard);
+  card.querySelector(".card__heart").addEventListener("click", likeCard);
 }
 
 document.body.addEventListener("click", (event) => {});
