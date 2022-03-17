@@ -31,6 +31,7 @@ const editName = document.querySelector(".profile__edit-button");
 const addCard = document.querySelector(".profile__add-button");
 const editPopap = document.querySelector(".popup_edit-profile");
 const addPopap = document.querySelector(".popup_new-card");
+const photoPopup = document.querySelector(".popup_open-photo");
 const closePopup = document.querySelectorAll(".popup__close");
 let nameInput = editPopap.querySelector(".popup__input_type_name");
 let jobInput = editPopap.querySelector(".popup__input_type_job");
@@ -51,7 +52,7 @@ function renderCard(card) {
 
   setCardActionsListener(cardBlock);
 
-  cards.append(cardBlock);
+  cards.prepend(cardBlock);
 }
 
 function openPopup(event) {
@@ -61,6 +62,15 @@ function openPopup(event) {
     jobInput.value = profilProfession.textContent;
   } else if (event.target.classList.contains("profile__add-button")) {
     addPopap.classList.add("popup_opened");
+  } else if (event.target.classList.contains("card__photo")) {
+    photoPopup.classList.add("popup_opened");
+    photoPopup
+      .querySelector(".popup__photo")
+      .setAttribute("src", event.target.getAttribute("src"));
+    photoPopup.querySelector(".popup__caption").textContent =
+      event.currentTarget.parentNode.querySelector(
+        ".card__caption"
+      ).textContent;
   }
 }
 
@@ -86,15 +96,17 @@ function likeCard(event) {
   heart.classList.toggle("card__heart_active");
 }
 
+function openPhoto(event) {}
+
 function setCardActionsListener(card) {
   card.querySelector(".card__delete").addEventListener("click", removeCard);
   card.querySelector(".card__heart").addEventListener("click", likeCard);
+  card.querySelector(".card__photo").addEventListener("click", openPopup);
 }
 
 function formSubmitCard(event) {
   event.preventDefault();
-  let card = [{}];
-  console.log(titleInput);
+  let card = [];
   card.name = titleInput.value;
   card.link = linkInput.value;
   renderCard(card);
