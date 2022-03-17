@@ -25,14 +25,19 @@ const initialCards = [
   },
 ];
 
-let popup = document.querySelector(".popup");
-let formElement = popup.querySelector(".popup__form");
+const popup = document.querySelector(".popup");
+const formElement = popup.querySelector(".popup__form");
 const editName = document.querySelector(".profile__edit-button");
-const closePopup = popup.querySelector(".popup__close");
-let nameInput = popup.querySelector(".popup__input_type_name");
-let jobInput = popup.querySelector(".popup__input_type_job");
+const addCard = document.querySelector(".profile__add-button");
+const editPopap = document.querySelector(".popup_edit-profile");
+const addPopap = document.querySelector(".popup_new-card");
+const closePopup = document.querySelectorAll(".popup__close");
+let nameInput = editPopap.querySelector(".popup__input_type_name");
+let jobInput = editPopap.querySelector(".popup__input_type_job");
 let profileName = document.querySelector(".profile__name");
 let profilProfession = document.querySelector(".profile__profession");
+let titleInput = addPopap.querySelector(".popup__input_type_title");
+let linkInput = addPopap.querySelector(".popup__input_type_link");
 const cards = document.querySelector(".cards");
 
 function renderCard(card) {
@@ -49,21 +54,26 @@ function renderCard(card) {
   cards.append(cardBlock);
 }
 
-function closedPopup() {
+function openPopup(event) {
+  if (event.target.classList.contains("profile__edit-button")) {
+    editPopap.classList.add("popup_opened");
+    nameInput.value = profileName.textContent;
+    jobInput.value = profilProfession.textContent;
+  } else if (event.target.classList.contains("profile__add-button")) {
+    addPopap.classList.add("popup_opened");
+  }
+}
+
+function closedPopup(event) {
+  const popup = event.currentTarget.closest(".popup");
   popup.classList.remove("popup_opened");
 }
 
-function openPopup() {
-  popup.classList.add("popup_opened");
-  nameInput.value = profileName.textContent;
-  jobInput.value = profilProfession.textContent;
-}
-
-function formSubmitHandler(evt) {
-  evt.preventDefault();
+function formSubmitHandler(event) {
+  event.preventDefault();
   profileName.textContent = nameInput.value;
   profilProfession.textContent = jobInput.value;
-  closedPopup();
+  closedPopup(event);
 }
 
 function removeCard(event) {
@@ -81,12 +91,26 @@ function setCardActionsListener(card) {
   card.querySelector(".card__heart").addEventListener("click", likeCard);
 }
 
-document.body.addEventListener("click", (event) => {});
+function formSubmitCard(event) {
+  event.preventDefault();
+  let card = [{}];
+  console.log(titleInput);
+  card.name = titleInput.value;
+  card.link = linkInput.value;
+  renderCard(card);
+  titleInput.value = null;
+  linkInput.value = null;
+  closedPopup(event);
+}
 
 editName.addEventListener("click", openPopup);
 
-closePopup.addEventListener("click", closedPopup);
+addCard.addEventListener("click", openPopup);
 
-formElement.addEventListener("submit", formSubmitHandler);
+for (let i = 0; i < closePopup.length; i++) {
+  closePopup[i].addEventListener("click", closedPopup);
+}
 
+editPopap.addEventListener("submit", formSubmitHandler);
+addPopap.addEventListener("submit", formSubmitCard);
 initialCards.map(renderCard);
