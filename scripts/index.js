@@ -83,13 +83,11 @@ function buttonClosePopupEvt(evt) {
 }
 
 function escClosePopupEvt(evt) {
-  evt.preventDefault();
   const activePopup = document.querySelector('.popup_opened');
   if (evt.key === "Escape"){
     closePopup(activePopup);
   }
 }
-
 
 function openProfilePopup() {
   profilePopupElementName.value = profileName.textContent;
