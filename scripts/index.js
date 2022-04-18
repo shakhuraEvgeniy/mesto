@@ -29,7 +29,9 @@ const buttonEditProfile = document.querySelector(".profile__edit-button");
 const buttonAddCard = document.querySelector(".profile__add-button");
 const profilePopup = document.querySelector(".popup_edit-profile");
 const cardPopup = document.querySelector(".popup_new-card");
-const imagePopup = document.querySelector(".popup_open-photo");
+export const imagePopup = document.querySelector(".popup_open-photo");
+export const imagePopupElementPhoto = imagePopup.querySelector(".popup__photo");
+export const imagePopupElementCaption = imagePopup.querySelector(".popup__caption");
 const profilePopupElementName = profilePopup.querySelector(
   ".popup__input_type_name"
 );
@@ -43,10 +45,8 @@ const cardPopupElementTitle = cardPopup.querySelector(
 );
 const cardPopupElementLink = cardPopup.querySelector(".popup__input_type_link");
 const cardsContainer = document.querySelector(".cards");
-const cardBlock = document.querySelector(".card-template");
-const imagePopupElementPhoto = imagePopup.querySelector(".popup__photo");
-const imagePopupElementCaption = imagePopup.querySelector(".popup__caption");
 const cardPopupElementForm = cardPopup.querySelector(".popup__form");
+
 
 import {Card} from './Card.js';
 
@@ -57,7 +57,7 @@ function renderCard(cardDate) {
   cardsContainer.prepend(cardElement);
 }
 
-function openPopup(popup) {
+export function openPopup(popup) {
   popup.classList.add("popup_opened");
   popup.addEventListener("mousedown", handlePopupClose);
   document.addEventListener("keydown", handleEscKey);

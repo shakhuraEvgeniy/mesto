@@ -1,8 +1,11 @@
+import { openPopup, imagePopup, imagePopupElementPhoto, imagePopupElementCaption } from "./index.js";
+
 export class Card {
-  constructor(cardDate, cardSelector) {
+  constructor(cardDate, cardSelector, openPopup) {
     this._name = cardDate.name;
     this._link = cardDate.link;
     this._cardSelector = cardSelector;
+    this._openPopup = openPopup;
   }
 
   _getTemplate() {
