@@ -48,20 +48,13 @@ const imagePopupElementPhoto = imagePopup.querySelector(".popup__photo");
 const imagePopupElementCaption = imagePopup.querySelector(".popup__caption");
 const cardPopupElementForm = cardPopup.querySelector(".popup__form");
 
-function renderCard(card) {
-  cardsContainer.prepend(createCard(card));
-}
+import {Card} from './Card.js';
 
-function createCard(card) {
-  const cardBlockNew = cardBlock.content.firstElementChild.cloneNode(true);
-  const cardElementPhoto = cardBlockNew.querySelector(".card__photo");
 
-  cardBlockNew.querySelector(".card__caption").textContent = card.name;
-  cardElementPhoto.setAttribute("src", card.link);
-  cardElementPhoto.setAttribute("alt", card.name);
-
-  setCardActionsListener(cardBlockNew);
-  return cardBlockNew;
+function renderCard(cardDate) {
+  const card = new Card(cardDate, '.card-template');
+  const cardElement = card.createCard();
+  cardsContainer.prepend(cardElement);
 }
 
 function openPopup(popup) {
@@ -99,34 +92,11 @@ function openAddCardPopup() {
   openPopup(cardPopup);
 }
 
-function openPhotoPopup(event) {
-  imagePopupElementPhoto.src = event.target.src;
-  imagePopupElementPhoto.alt = event.target.alt;
-  imagePopupElementCaption.textContent = event.target.alt;
-  openPopup(imagePopup);
-}
-
 function handleProfileFormSubmit(event) {
   event.preventDefault();
   profileName.textContent = profilePopupElementName.value;
   profilProfession.textContent = profilePopupElementjob.value;
   closePopup(profilePopup);
-}
-
-function removeCard(event) {
-  const card = event.currentTarget.closest(".card");
-  card.remove();
-}
-
-function likeCard(event) {
-  const heart = event.currentTarget;
-  heart.classList.toggle("card__heart_active");
-}
-
-function setCardActionsListener(card) {
-  card.querySelector(".card__delete").addEventListener("click", removeCard);
-  card.querySelector(".card__heart").addEventListener("click", likeCard);
-  card.querySelector(".card__photo").addEventListener("click", openPhotoPopup);
 }
 
 function handleNewCardFormSubmit(event) {
