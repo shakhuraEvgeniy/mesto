@@ -38,9 +38,11 @@
       <button class="popup__close" aria-label="Закрыть попап" type="button"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
       <form class="popup__form" name="popup__form_edit-profile">
-        <input id="name-input" class="popup__input popup__input_type_name" type="text" name="nameInput" minlength="2" maxlength="40" required>
+        <input id="name-input" class="popup__input popup__input_type_name" type="text" name="nameInput"
+          placeholder="Имя" minlength="2" maxlength="40" required>
         <span class="name-input-error popup__input-error"></span>
-        <input id="job-input" class="popup__input popup__input_type_job" type="text" name="jobInput" minlength="2" maxlength="200" required>
+        <input id="job-input" class="popup__input popup__input_type_job" type="text" name="jobInput"
+          placeholder="Профессиональная деятельность" minlength="2" maxlength="200" required>
         <span class="job-input-error popup__input-error"></span>
         <button class="popup__submit" type="submit">Сохранить</button>
       </form>
@@ -52,9 +54,11 @@
       <button class="popup__close" aria-label="Закрыть попап" type="button"></button>
       <h2 class="popup__title">Новое место</h2>
       <form class="popup__form" name="popup__form_new-card">
-        <input id="title-input" class="popup__input popup__input_type_title" type="text" name="titleInput" placeholder="Название" minlength="2" maxlength="30" required>
+        <input id="title-input" class="popup__input popup__input_type_title" type="text" name="titleInput"
+          placeholder="Название" minlength="2" maxlength="30" required>
         <span class="title-input-error popup__input-error"></span>
-        <input id="link-input" class="popup__input popup__input_type_link" type="url" name="linkInput" placeholder="Ссылка на картинку" required>
+        <input id="link-input" class="popup__input popup__input_type_link" type="url" name="linkInput"
+          placeholder="Ссылка на картинку" required>
         <span class="link-input-error popup__input-error"></span>
         <button class="popup__submit" type="submit">Создать</button>
       </form>
@@ -80,9 +84,6 @@
     </article>
   </template>
   <script type="module" src="./scripts/index.js"></script>
-  <script type="module" src="./scripts/Card.js"></script>
-  <script type="module" src="./scripts/FormValidator.js"></script>
-  <!-- <script src="./scripts/validate.js"></script> -->
 </body>
 
 </html>
