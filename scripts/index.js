@@ -1,3 +1,6 @@
+import {Card} from './Card.js';
+import {FormValidator} from './FormValidator.js';
+
 const initialCards = [
   {
     name: "Архыз",
@@ -25,6 +28,15 @@ const initialCards = [
   },
 ];
 
+const settings = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__submit',
+  inactiveButtonClass: 'popup__submit_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_active'
+}
+
 const buttonEditProfile = document.querySelector(".profile__edit-button");
 const buttonAddCard = document.querySelector(".profile__add-button");
 const profilePopup = document.querySelector(".popup_edit-profile");
@@ -46,9 +58,7 @@ const cardPopupElementTitle = cardPopup.querySelector(
 const cardPopupElementLink = cardPopup.querySelector(".popup__input_type_link");
 const cardsContainer = document.querySelector(".cards");
 const cardPopupElementForm = cardPopup.querySelector(".popup__form");
-
-
-import {Card} from './Card.js';
+const listForm = document.querySelectorAll(".popup__form");
 
 
 function renderCard(cardDate) {
@@ -119,3 +129,6 @@ buttonAddCard.addEventListener("click", openAddCardPopup);
 profilePopup.addEventListener("submit", handleProfileFormSubmit);
 cardPopup.addEventListener("submit", handleNewCardFormSubmit);
 initialCards.forEach(renderCard);
+
+const validate = new FormValidator(settings, '.popup__form');
+validate.enableValidation();

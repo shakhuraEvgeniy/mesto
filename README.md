@@ -15,6 +15,10 @@
 7. Создане pop-up
 8. DOM-дерево
 9. Знакомство с javaScript
-7. Выкладка работы на GitHub Pages
+10. Валидация форм
+11. ООП
+12. Создание классов
+13. Создание модулей
+10. Выкладка работы на GitHub Pages
 
 * [Ссылка на на работу](https://shakhuraevgeniy.github.io/mesto/index.html)
