@@ -71,7 +71,6 @@ export function openPopup(popup) {
   popup.classList.add("popup_opened");
   popup.addEventListener("mousedown", handlePopupClose);
   document.addEventListener("keydown", handleEscKey);
-  validate.enableValidation();
 }
 
 function closePopup(popup) {
@@ -111,6 +110,8 @@ function handleNewCardFormSubmit(event) {
   renderCard({name: cardPopupElementTitle.value, link: cardPopupElementLink.value});
   cardPopupElementForm.reset();
   const submitButton = event.target.querySelector('.popup__submit');
+  submitButton.setAttribute("disabled", "disabled");
+  submitButton.classList.add('popup__submit_disabled');
   closePopup(cardPopup);
 }
 
@@ -123,3 +124,4 @@ cardPopup.addEventListener("submit", handleNewCardFormSubmit);
 initialCards.forEach(renderCard);
 
 const validate = new FormValidator(settings, '.popup__form');
+validate.enableValidation();
