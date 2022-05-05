@@ -1,5 +1,6 @@
 import {Card} from './Card.js';
 import {FormValidator} from './FormValidator.js';
+import Section from './Section.js';
 import {
   buttonEditProfile,
   buttonAddCard,
@@ -11,17 +12,23 @@ import {
   profilProfession,
   cardPopupElementTitle,
   cardPopupElementLink,
-  cardsContainer,
+  cardsSelector,
   cardPopupElementForm,
   initialCards,
   settings,
 } from '../utils/constants.js';
 
-function renderCard(cardDate) {
-  const card = new Card(cardDate, '.card-template');
-  const cardElement = card.createCard();
-  cardsContainer.prepend(cardElement);
-}
+
+const renderCard = new Section({
+  items: initialCards,
+  renderer: (item) =>{
+    const card = new Card(item, '.card-template');
+    const cardElement = card.createCard();
+    renderCard.addItem(cardElement);
+  }
+}, cardsSelector);
+
+renderCard.renderItems();
 
 export function openPopup(popup) {
   popup.classList.add("popup_opened");
@@ -63,7 +70,16 @@ function handleProfileFormSubmit(event) {
 
 function handleNewCardFormSubmit(event) {
   event.preventDefault();
-  renderCard({name: cardPopupElementTitle.value, link: cardPopupElementLink.value});
+  const renderCard = new Section({
+    items: [{name: cardPopupElementTitle.value, link: cardPopupElementLink.value}],
+    renderer: (item) =>{
+      const card = new Card(item, '.card-template');
+      const cardElement = card.createCard();
+      renderCard.addItem(cardElement);
+    }
+  }, cardsSelector);
+  renderCard.renderItems();
+
   cardPopupElementForm.reset();
   const submitButton = event.target.querySelector('.popup__submit');
   submitButton.setAttribute("disabled", "disabled");
@@ -77,7 +93,6 @@ buttonAddCard.addEventListener("click", () => openPopup(cardPopup));
 
 profilePopup.addEventListener("submit", handleProfileFormSubmit);
 cardPopup.addEventListener("submit", handleNewCardFormSubmit);
-initialCards.forEach(renderCard);
 
 const validate = new FormValidator(settings, '.popup__form');
 validate.enableValidation();

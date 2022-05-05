@@ -53,6 +53,6 @@ export const cardPopupElementTitle = cardPopup.querySelector(
   ".popup__input_type_title"
 );
 export const cardPopupElementLink = cardPopup.querySelector(".popup__input_type_link");
-export const cardsContainer = document.querySelector(".cards");
+export const cardsSelector = ".cards";
 export const cardPopupElementForm = cardPopup.querySelector(".popup__form");
 
