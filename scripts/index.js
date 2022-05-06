@@ -1,6 +1,8 @@
 import {Card} from './Card.js';
 import {FormValidator} from './FormValidator.js';
 import Section from './Section.js';
+import Popup from './Popup.js';
+
 import {
   buttonEditProfile,
   buttonAddCard,
@@ -30,6 +32,9 @@ const renderCard = new Section({
 
 renderCard.renderItems();
 
+
+/*
+
 export function openPopup(popup) {
   popup.classList.add("popup_opened");
   popup.addEventListener("mousedown", handlePopupClose);
@@ -53,19 +58,23 @@ function handleEscKey(evt) {
     const activePopup = document.querySelector('.popup_opened');
     closePopup(activePopup);
   }
-}
+} */
 
 function openProfilePopup() {
   profilePopupElementName.value = profileName.textContent;
   profilePopupElementJob.value = profilProfession.textContent;
-  openPopup(profilePopup);
+  const popup = new Popup (profilePopup);
+  popup.open();
+  popup.setEventListeners();
 }
 
 function handleProfileFormSubmit(event) {
   event.preventDefault();
   profileName.textContent = profilePopupElementName.value;
   profilProfession.textContent = profilePopupElementJob.value;
-  closePopup(profilePopup);
+  const popup = new Popup (profilePopup);
+  popup.close();
+  popup.removeEventListener();
 }
 
 function handleNewCardFormSubmit(event) {
@@ -84,12 +93,16 @@ function handleNewCardFormSubmit(event) {
   const submitButton = event.target.querySelector('.popup__submit');
   submitButton.setAttribute("disabled", "disabled");
   submitButton.classList.add('popup__submit_disabled');
-  closePopup(cardPopup);
+  const popup = new Popup (cardPopup);
+  popup.close();
 }
 
 buttonEditProfile.addEventListener("click", openProfilePopup);
 
-buttonAddCard.addEventListener("click", () => openPopup(cardPopup));
+buttonAddCard.addEventListener("click", () => {
+  const popup = new Popup (cardPopup);
+  popup.open();
+});
 
 profilePopup.addEventListener("submit", handleProfileFormSubmit);
 cardPopup.addEventListener("submit", handleNewCardFormSubmit);

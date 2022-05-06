@@ -1,5 +1,5 @@
 import { imagePopup, imagePopupElementPhoto, imagePopupElementCaption } from "../utils/constants.js";
-import {openPopup} from './index.js';
+//import {openPopup} from './index.js';
 
 export class Card {
   constructor(cardDate, cardSelector, openPopup) {
@@ -51,7 +51,7 @@ export class Card {
     imagePopupElementPhoto.src = event.target.src;
     imagePopupElementPhoto.alt = event.target.alt;
     imagePopupElementCaption.textContent = event.target.alt;
-    openPopup(imagePopup);
+   // openPopup(imagePopup);
   }
 }
 
