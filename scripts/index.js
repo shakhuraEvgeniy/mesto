@@ -19,6 +19,7 @@ import {
   initialCards,
   settings,
 } from '../utils/constants.js';
+import UserInfo from './UserInfo.js';
 
 
 const renderCard = new Section({
@@ -61,8 +62,13 @@ function handleEscKey(evt) {
 } */
 
 function openProfilePopup() {
-  profilePopupElementName.value = profileName.textContent;
-  profilePopupElementJob.value = profilProfession.textContent;
+  const userInfo = new UserInfo({name: ".profile__name", job: ".profile__profession"});
+  const userInfoData = userInfo.getUserInfo();
+
+  profilePopupElementName.value = userInfoData.name;
+  profilePopupElementJob.value = userInfoData.job;
+
+
   const popup = new Popup (profilePopup);
   popup.open();
   popup.setEventListeners();
@@ -70,8 +76,8 @@ function openProfilePopup() {
 
 function handleProfileFormSubmit(event) {
   event.preventDefault();
-  profileName.textContent = profilePopupElementName.value;
-  profilProfession.textContent = profilePopupElementJob.value;
+  const userInfo = new UserInfo({name: ".profile__name", job: ".profile__profession"});
+  userInfo.setUserInfo(profilePopupElementName.value, profilePopupElementJob.value)
   const popup = new Popup (profilePopup);
   popup.close();
   popup.removeEventListener();
