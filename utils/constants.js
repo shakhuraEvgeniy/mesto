@@ -36,11 +36,13 @@ export const settings = {
 
 export const buttonEditProfile = document.querySelector(".profile__edit-button");
 export const buttonAddCard = document.querySelector(".profile__add-button");
+export const profilePopupSelector = ".popup_edit-profile";
+export const cardPopupSelector = ".popup_new-card";
+export const imagePopupSelector = ".popup_open-photo";
+export const imagePopupElementPhotoSelector = ".popup__photo";
+export const imagePopupElementCaptionSelector = ".popup__caption";
+export const cardPopup = document.querySelector('.popup_new-card');
 export const profilePopup = document.querySelector(".popup_edit-profile");
-export const cardPopup = document.querySelector(".popup_new-card");
-export const imagePopup = document.querySelector(".popup_open-photo");
-export const imagePopupElementPhoto = imagePopup.querySelector(".popup__photo");
-export const imagePopupElementCaption = imagePopup.querySelector(".popup__caption");
 export const profilePopupElementName = profilePopup.querySelector(
   ".popup__input_type_name"
 );
