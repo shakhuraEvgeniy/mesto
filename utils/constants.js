@@ -41,7 +41,6 @@ export const cardPopupSelector = ".popup_new-card";
 export const imagePopupSelector = ".popup_open-photo";
 export const imagePopupElementPhotoSelector = ".popup__photo";
 export const imagePopupElementCaptionSelector = ".popup__caption";
-export const cardPopup = document.querySelector('.popup_new-card');
 export const profilePopup = document.querySelector(".popup_edit-profile");
 export const profilePopupElementName = profilePopup.querySelector(
   ".popup__input_type_name"
@@ -49,12 +48,5 @@ export const profilePopupElementName = profilePopup.querySelector(
 export const profilePopupElementJob = profilePopup.querySelector(
   ".popup__input_type_job"
 );
-export const profileName = document.querySelector(".profile__name");
-export const profilProfession = document.querySelector(".profile__profession");
-export const cardPopupElementTitle = cardPopup.querySelector(
-  ".popup__input_type_title"
-);
-export const cardPopupElementLink = cardPopup.querySelector(".popup__input_type_link");
 export const cardsSelector = ".cards";
-export const cardPopupElementForm = cardPopup.querySelector(".popup__form");
 
