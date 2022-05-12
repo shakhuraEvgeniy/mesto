@@ -21,9 +21,6 @@ import {
   settings,
 } from '../utils/constants.js';
 
-const popupImage = new PopupWithImage(imagePopupElementPhotoSelector, imagePopupElementCaptionSelector, imagePopupSelector);
-popupImage.setEventListeners();
-
 function createCard(item) {
   const card = new Card({
     cardDate: item,
@@ -34,26 +31,25 @@ function createCard(item) {
   const cardElement = card.createCard();
   return cardElement;
 }
+const popupImage = new PopupWithImage(imagePopupElementPhotoSelector, imagePopupElementCaptionSelector, imagePopupSelector);
+popupImage.setEventListeners();
 
-const renderCard = new Section({
-  items: initialCards,
-  renderer: (item) =>{
-    renderCard.addItem(createCard(item));
-  }
-}, cardsSelector);
+function renderCard(dataCard) {
+  const renderCard = new Section({
+    items: dataCard,
+    renderer: (item) =>{
+      renderCard.addItem(createCard(item));
+    }
+  }, cardsSelector);
+    renderCard.renderItems();
+}
 
-  renderCard.renderItems();
+renderCard(initialCards);
 
 const popupNewCard = new PopupWithForm({
   popupSelector: cardPopupSelector,
   onSubmit: (inputValue) => {
-    const renderCard = new Section({
-      items: [{name: inputValue.titleInput, link: inputValue.linkInput}],
-      renderer: (item) =>{
-        renderCard.addItem(createCard(item));
-      }
-    }, cardsSelector);
-    renderCard.renderItems();
+    renderCard([{name: inputValue.titleInput, link: inputValue.linkInput}]);
   }
 });
 popupNewCard.setEventListeners();
@@ -82,10 +78,7 @@ function openNewCardPopup () {
 };
 
 buttonEditProfile.addEventListener("click", openProfilePopup);
-
 buttonAddCard.addEventListener("click", openNewCardPopup);
-
-
 
 const formValidators = {}
 
