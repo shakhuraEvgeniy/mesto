@@ -30,7 +30,7 @@ const renderCard = new Section({
       handleCardClick: (evt) => {
         const popupImage = new PopupWithImage(evt, imagePopupElementPhotoSelector, imagePopupElementCaptionSelector, imagePopupSelector);
         popupImage.setEventListeners();
-        popupImage.open();
+        popupImage.open(evt.target.alt, evt.target.src);
       }
   },'.card-template');
     const cardElement = card.createCard();
@@ -51,7 +51,7 @@ const popupNewCard = new PopupWithForm({
           handleCardClick: (evt) => {
             const popupImage = new PopupWithImage(evt, imagePopupElementPhotoSelector, imagePopupElementCaptionSelector, imagePopupSelector);
             popupImage.setEventListeners();
-            popupImage.open();
+            popupImage.open(evt.target.alt, evt.target.src);
           }
       },'.card-template');
         const cardElement = card.createCard();
