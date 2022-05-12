@@ -77,6 +77,7 @@ function openProfilePopup() {
   profilePopupElementJob.value = userInfoData.job;
   popupProfile.open();
   popupProfile.setEventListeners();
+  validate.resetValidation();
 };
 
 function openNewCardPopup () {
