@@ -44,7 +44,7 @@ const popupNewCard = new PopupWithForm({
   popupSelector: cardPopupSelector,
   onSubmit: (inputValue) => {
     const renderCard = new Section({
-      items: [{name: inputValue[0], link: inputValue[1]}],
+      items: [{name: inputValue.titleInput, link: inputValue.linkInput}],
       renderer: (item) =>{
         const card = new Card({
           cardDate: item,
@@ -67,7 +67,7 @@ const userInfo = new UserInfo({name: ".profile__name", job: ".profile__professio
 const popupProfile = new PopupWithForm({
   popupSelector: profilePopupSelector,
   onSubmit: (inputValue) => {
-    userInfo.setUserInfo(inputValue[0], inputValue[1]);
+    userInfo.setUserInfo(inputValue.nameInput, inputValue.jobInput);
   }
 });
 
