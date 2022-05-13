@@ -34,22 +34,20 @@ function createCard(item) {
 const popupImage = new PopupWithImage(imagePopupElementPhotoSelector, imagePopupElementCaptionSelector, imagePopupSelector);
 popupImage.setEventListeners();
 
-function renderCard(dataCard) {
-  const renderCard = new Section({
-    items: dataCard,
-    renderer: (item) =>{
-      renderCard.addItem(createCard(item));
-    }
-  }, cardsSelector);
-    renderCard.renderItems();
-}
 
-renderCard(initialCards);
+const renderCard = new Section({
+  items: initialCards,
+  renderer: (item) =>{
+    renderCard.addItem(createCard(item));
+  }
+}, cardsSelector);
+
+renderCard.renderItems();
 
 const popupNewCard = new PopupWithForm({
   popupSelector: cardPopupSelector,
   onSubmit: (inputValue) => {
-    renderCard([{name: inputValue.titleInput, link: inputValue.linkInput}]);
+    renderCard.addItem(createCard({name: inputValue.titleInput, link: inputValue.linkInput}));
   }
 });
 popupNewCard.setEventListeners();
