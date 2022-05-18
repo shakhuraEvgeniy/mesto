@@ -5,6 +5,7 @@ import Section from './Section.js';
 import UserInfo from './UserInfo.js';
 import PopupWithImage from './PopupWithImage.js';
 import PopupWithForm from './PopupWithForm.js';
+import Api from './Api';
 
 import {
   buttonEditProfile,
@@ -17,9 +18,47 @@ import {
   imagePopupElementCaptionSelector,
   imagePopupSelector,
   cardsSelector,
-  initialCards,
+  // initialCards,
   settings,
 } from '../utils/constants.js';
+
+
+const api = new Api({
+  url: 'https://mesto.nomoreparties.co/v1/cohort-41',
+  headers: {
+    authorization: 'd4e82cd0-9095-4cb7-97cc-532cb8bcd7e0',
+    'Content-Type': 'application/json'
+  }
+})
+
+
+api.getInitialCards()
+  .then((data) =>{
+    data.forEach(item =>{
+      renderCard.addItem(createCard(item));
+    })
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+api.getUserInfo()
+  .then((data) =>{
+    userInfo.setUserInfo(data.name, data.about);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+const renderCard = new Section({
+  items: [],
+  renderer: (item) =>{
+    renderCard.addItem(createCard(item));
+  }
+}, cardsSelector);
+
+//renderCard.renderItems();
+
 
 function createCard(item) {
   const card = new Card({
@@ -35,14 +74,6 @@ const popupImage = new PopupWithImage(imagePopupElementPhotoSelector, imagePopup
 popupImage.setEventListeners();
 
 
-const renderCard = new Section({
-  items: initialCards,
-  renderer: (item) =>{
-    renderCard.addItem(createCard(item));
-  }
-}, cardsSelector);
-
-renderCard.renderItems();
 
 const popupNewCard = new PopupWithForm({
   popupSelector: cardPopupSelector,
@@ -57,7 +88,13 @@ const userInfo = new UserInfo({name: ".profile__name", job: ".profile__professio
 const popupProfile = new PopupWithForm({
   popupSelector: profilePopupSelector,
   onSubmit: (inputValue) => {
-    userInfo.setUserInfo(inputValue.nameInput, inputValue.jobInput);
+    api.setUserInfo({name: inputValue.nameInput, about: inputValue.jobInput})
+      .then((data) =>{
+        userInfo.setUserInfo(data.name, data.about);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 });
 popupProfile.setEventListeners();
@@ -91,3 +128,6 @@ const enableValidation = (settings) => {
 };
 
 enableValidation(settings);
+
+
+
