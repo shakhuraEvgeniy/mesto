@@ -10,3 +10,7 @@
   padding-bottom: 8px;
   outline: none;
 }
+
+.popup__input:first-of-type{
+  margin-top: 35px;
+}
