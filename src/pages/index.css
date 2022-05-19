@@ -14,6 +14,7 @@
 @import url(../blocks/card/card.css);
 @import url(../blocks/card/__caption/card__caption.css);
 @import url(../blocks/card/__heart/card__heart.css);
+@import url(../blocks/card/__count-likes/card__count-likes.css);
 @import url(../blocks/card/__photo/card__photo.css);
 @import url(../blocks/card/__group/card__group.css);
 @import url(../blocks/card/__heart/_active/card__heart_active.css);
