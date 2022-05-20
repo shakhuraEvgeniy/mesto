@@ -18,8 +18,10 @@ import {
   imagePopupElementCaptionSelector,
   imagePopupSelector,
   cardsSelector,
-  // initialCards,
   settings,
+  buttonEditAvatar,
+  avatarPopupSelector,
+  profileAvatar
 } from '../utils/constants.js';
 
 
@@ -30,7 +32,6 @@ const api = new Api({
     'Content-Type': 'application/json'
   }
 })
-
 
 api.getInitialCards()
   .then((data) =>{
@@ -45,10 +46,13 @@ api.getInitialCards()
 api.getUserInfo()
   .then((data) =>{
     userInfo.setUserInfo(data.name, data.about);
+    profileAvatar.style.backgroundImage = `url('${data.avatar}')`;
   })
   .catch((err) => {
     console.log(err);
   });
+
+
 
 const renderCard = new Section({
   items: [],
@@ -73,7 +77,19 @@ function createCard(item) {
 const popupImage = new PopupWithImage(imagePopupElementPhotoSelector, imagePopupElementCaptionSelector, imagePopupSelector);
 popupImage.setEventListeners();
 
-
+const popupEditAvatar = new PopupWithForm({
+  popupSelector: avatarPopupSelector,
+  onSubmit: (inputValue) => {
+    api.setAvatar(inputValue.linkInput)
+      .then((data)=>{
+        profileAvatar.style.backgroundImage = `url('${data.avatar}')`;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+})
+popupEditAvatar.setEventListeners();
 
 const popupNewCard = new PopupWithForm({
   popupSelector: cardPopupSelector,
@@ -83,28 +99,24 @@ const popupNewCard = new PopupWithForm({
 });
 popupNewCard.setEventListeners();
 
-const userInfo = new UserInfo({name: ".profile__name", job: ".profile__profession"});
+const userInfo = new UserInfo({name: ".profile__name", job: ".profile__profession"}, api);
 
 const popupProfile = new PopupWithForm({
   popupSelector: profilePopupSelector,
   onSubmit: (inputValue) => {
-    api.setUserInfo({name: inputValue.nameInput, about: inputValue.jobInput})
-      .then((data) =>{
-        userInfo.setUserInfo(data.name, data.about);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    userInfo.setUserInfo(inputValue.nameInput, inputValue.jobInput);
   }
 });
 popupProfile.setEventListeners();
 
 function openProfilePopup() {
   const userInfoData = userInfo.getUserInfo();
-  profilePopupElementName.value = userInfoData.name;
-  profilePopupElementJob.value = userInfoData.job;
-  popupProfile.open();
-  formValidators['popup__form_edit-profile'].resetValidation();
+  userInfoData.then((data)=>{
+    profilePopupElementName.value = data.name;
+    profilePopupElementJob.value = data.about;
+    popupProfile.open();
+    formValidators['popup__form_edit-profile'].resetValidation();
+  })
 };
 
 function openNewCardPopup () {
@@ -112,8 +124,15 @@ function openNewCardPopup () {
   formValidators['popup__form_new-card'].resetValidation();
 };
 
+function openPopupEditAvatar(){
+  popupEditAvatar.open();
+  formValidators['popup__form_edit-avatar'].resetValidation();
+}
+
 buttonEditProfile.addEventListener("click", openProfilePopup);
 buttonAddCard.addEventListener("click", openNewCardPopup);
+buttonEditAvatar.addEventListener("click", openPopupEditAvatar);
+
 
 const formValidators = {}
 

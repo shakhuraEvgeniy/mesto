@@ -1,15 +1,24 @@
+import { data } from "browserslist";
+
 export default class UserInfo {
-  constructor(selectors){
+  constructor(selectors, api){
     this._name = document.querySelector(selectors.name);
     this._job = document.querySelector(selectors.job);
+    this._api = api;
   }
 
   getUserInfo(){
-    return {name: this._name.textContent, job: this._job.textContent}
+    return this._api.getUserInfo()
   }
 
   setUserInfo(name, job){
-    this._name.textContent = name;
-    this._job.textContent = job;
+    this._api.setUserInfo({name: name, about: job})
+      .then((data)=>{
+        this._name.textContent = data.name;
+        this._job.textContent = data.about;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 }
