@@ -160,12 +160,14 @@ const enableValidation = (settings) => {
 enableValidation(settings);
 
 function renderLoading(isLoading, evt) {
-
   if (isLoading) {
-    evt.submitter.querySelector('.default').style.display = 'none';
-    evt.submitter.querySelector('.loading').style.display = '';
+    console.log();
+    evt.target.querySelector('.default').style.display = 'none';
+    evt.target.querySelector('.loading').style.display = '';
+    evt.target.querySelector('.popup__submit').setAttribute("disabled", "disabled");
   } else {
-    evt.submitter.querySelector('.default').style.display = '';
-    evt.submitter.querySelector('.loading').style.display = 'none';
+    evt.target.querySelector('.default').style.display = '';
+    evt.target.querySelector('.loading').style.display = 'none';
+    evt.target.querySelector('.popup__submit').setAttribute("disabled", "disabled");
   }
 }
