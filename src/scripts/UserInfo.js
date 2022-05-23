@@ -12,13 +12,7 @@ export default class UserInfo {
   }
 
   setUserInfo(name, job){
-    this._api.setUserInfo({name: name, about: job})
-      .then((data)=>{
-        this._name.textContent = data.name;
-        this._job.textContent = data.about;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    this._name.textContent = name;
+    this._job.textContent = job;
   }
 }

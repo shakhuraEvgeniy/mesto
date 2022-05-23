@@ -24,7 +24,6 @@ import {
   profileAvatar
 } from '../utils/constants.js';
 
-
 const api = new Api({
   url: 'https://mesto.nomoreparties.co/v1/cohort-41',
   headers: {
@@ -32,6 +31,8 @@ const api = new Api({
     'Content-Type': 'application/json'
   }
 })
+
+
 
 api.getInitialCards()
   .then((data) =>{
@@ -52,17 +53,11 @@ api.getUserInfo()
     console.log(err);
   });
 
-
-
 const renderCard = new Section({
-  items: [],
   renderer: (item) =>{
     renderCard.addItem(createCard(item));
   }
 }, cardsSelector);
-
-//renderCard.renderItems();
-
 
 function createCard(item) {
   const card = new Card({
@@ -79,14 +74,19 @@ popupImage.setEventListeners();
 
 const popupEditAvatar = new PopupWithForm({
   popupSelector: avatarPopupSelector,
-  onSubmit: (inputValue) => {
+  onSubmit: (inputValue, evt) => {
+    renderLoading(true, evt);
     api.setAvatar(inputValue.linkInput)
       .then((data)=>{
         profileAvatar.style.backgroundImage = `url('${data.avatar}')`;
       })
       .catch((err) => {
         console.log(err);
-      });
+      })
+      .finally(()=>{
+        popupEditAvatar.close();
+        renderLoading(false, evt);
+      })
   }
 })
 popupEditAvatar.setEventListeners();
@@ -103,8 +103,19 @@ const userInfo = new UserInfo({name: ".profile__name", job: ".profile__professio
 
 const popupProfile = new PopupWithForm({
   popupSelector: profilePopupSelector,
-  onSubmit: (inputValue) => {
-    userInfo.setUserInfo(inputValue.nameInput, inputValue.jobInput);
+  onSubmit: (inputValue, evt) => {
+    renderLoading(true, evt);
+    api.setUserInfo({name: inputValue.nameInput, about: inputValue.jobInput})
+      .then((data)=>{
+        userInfo.setUserInfo(data.name, data.about)
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(()=>{
+        popupProfile.close();
+        renderLoading(false, evt);
+      })
   }
 });
 popupProfile.setEventListeners();
@@ -148,5 +159,13 @@ const enableValidation = (settings) => {
 
 enableValidation(settings);
 
+function renderLoading(isLoading, evt) {
 
-
+  if (isLoading) {
+    evt.submitter.querySelector('.default').style.display = 'none';
+    evt.submitter.querySelector('.loading').style.display = '';
+  } else {
+    evt.submitter.querySelector('.default').style.display = '';
+    evt.submitter.querySelector('.loading').style.display = 'none';
+  }
+}
