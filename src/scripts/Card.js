@@ -1,10 +1,12 @@
 export default class Card {
-  constructor({cardDate, handleCardClick}, cardSelector) {
+  constructor({cardDate, handleCardClick, handleLikeClick, hendleDeleteIconClick}, cardSelector) {
     this._name = cardDate.name;
     this._link = cardDate.link;
-    this._id = cardDate._id
-    this._cardSelector = cardSelector;
+    this._id = cardDate._id;
     this._handleCardClick = handleCardClick;
+    this._handleLikeClick = handleLikeClick;
+    this._hendleDeleteIconClick = hendleDeleteIconClick;
+    this._cardSelector = cardSelector;
   }
 
   _getTemplate() {
@@ -35,9 +37,10 @@ export default class Card {
     this._element.querySelector(".card__photo").addEventListener("click", this._handleCardClick);
   }
 
-  _removeCard(evt) {
+  _removeCard = (evt) => {
     const card = evt.currentTarget.closest(".card");
-    card.remove();
+    this._hendleDeleteIconClick(card, this._id);
+    //card.remove();
   }
 
   _likeCard = (evt) => {

@@ -4,15 +4,21 @@ export default class Api{
     this._headers = config.headers;
   }
 
+  _errorHendler = (res) =>{
+    if (res.ok) return res.json();
+    return Promise.reject(`Ошибка: ${res.status}`);
+  }
+
+  getAllData(){
+    return Promise.all([this.getUserInfo(), this.getInitialCards()]);
+  }
+
   getUserInfo(){
     return fetch(`${this._url}/users/me`, {
       method: 'GET',
       headers: this._headers
     })
-    .then((res) =>{
-      if (res.ok) return res.json();
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+    .then((res) => this._errorHendler(res))
   }
 
   setUserInfo(data){
@@ -24,10 +30,7 @@ export default class Api{
         about: data.about
       })
     })
-    .then((res) =>{
-      if (res.ok) return res.json();
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+    .then((res) => this._errorHendler(res))
   }
 
   getInitialCards() {
@@ -35,10 +38,7 @@ export default class Api{
       method: 'GET',
       headers: this._headers
     })
-    .then((res) =>{
-      if (res.ok) return res.json();
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+    .then((res) => this._errorHendler(res))
   }
 
   addCard(name, link){
@@ -46,10 +46,7 @@ export default class Api{
       method: 'POST',
       headers: this._headers
     })
-    .then((res) =>{
-      if (res.ok) return res.json();
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+    .then((res) => this._errorHendler(res))
   }
 
   setAvatar(link){
@@ -60,9 +57,14 @@ export default class Api{
         avatar: link
       })
     })
-    .then((res) =>{
-      if (res.ok) return res.json();
-      return Promise.reject(`Ошибка: ${res.status}`);
+    .then((res) => this._errorHendler(res))
+  }
+
+  removeCard(id){
+    return fetch(`${this._url}/cards/${id}`, {
+      method: 'DELETE',
+      headers: this._headers,
     })
+    .then((res) => this._errorHendler(res))
   }
 }

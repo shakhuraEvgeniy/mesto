@@ -24,6 +24,8 @@ import {
   profileAvatar
 } from '../utils/constants.js';
 
+var userId = '';
+
 const api = new Api({
   url: 'https://mesto.nomoreparties.co/v1/cohort-41',
   headers: {
@@ -32,11 +34,14 @@ const api = new Api({
   }
 })
 
+api.getAllData()
+  .then((data)=>{
+    const [userData, cardsData] = data;
+    userInfo.setUserInfo(userData.name, userData.about);
+    profileAvatar.style.backgroundImage = `url('${userData.avatar}')`;
+    userId = userData._id;
 
-
-api.getInitialCards()
-  .then((data) =>{
-    data.forEach(item =>{
+    cardsData.forEach(item =>{
       renderCard.addItem(createCard(item));
     })
   })
@@ -44,14 +49,6 @@ api.getInitialCards()
     console.log(err);
   });
 
-api.getUserInfo()
-  .then((data) =>{
-    userInfo.setUserInfo(data.name, data.about);
-    profileAvatar.style.backgroundImage = `url('${data.avatar}')`;
-  })
-  .catch((err) => {
-    console.log(err);
-  });
 
 const renderCard = new Section({
   renderer: (item) =>{
@@ -64,11 +61,18 @@ function createCard(item) {
     cardDate: item,
     handleCardClick: (evt) => {
       popupImage.open(evt.target.alt, evt.target.src);
+    },
+    handleLikeClick: (card) => {
+      console.log(card);
+    },
+    hendleDeleteIconClick: (card, id) => {
+      console.log(id);
     }
   },'.card-template');
   const cardElement = card.createCard();
   return cardElement;
 }
+
 const popupImage = new PopupWithImage(imagePopupElementPhotoSelector, imagePopupElementCaptionSelector, imagePopupSelector);
 popupImage.setEventListeners();
 
@@ -94,6 +98,7 @@ popupEditAvatar.setEventListeners();
 const popupNewCard = new PopupWithForm({
   popupSelector: cardPopupSelector,
   onSubmit: (inputValue) => {
+    alert(userId);
     renderCard.addItem(createCard({name: inputValue.titleInput, link: inputValue.linkInput}));
   }
 });
@@ -121,13 +126,13 @@ const popupProfile = new PopupWithForm({
 popupProfile.setEventListeners();
 
 function openProfilePopup() {
-  const userInfoData = userInfo.getUserInfo();
-  userInfoData.then((data)=>{
-    profilePopupElementName.value = data.name;
-    profilePopupElementJob.value = data.about;
-    popupProfile.open();
-    formValidators['popup__form_edit-profile'].resetValidation();
-  })
+  userInfo.getUserInfo()
+    .then((data)=>{
+      profilePopupElementName.value = data.name;
+      profilePopupElementJob.value = data.about;
+      popupProfile.open();
+      formValidators['popup__form_edit-profile'].resetValidation();
+    })
 };
 
 function openNewCardPopup () {
