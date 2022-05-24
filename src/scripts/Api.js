@@ -44,7 +44,11 @@ export default class Api{
   addCard(name, link){
     return fetch(`${this._url}/cards`, {
       method: 'POST',
-      headers: this._headers
+      headers: this._headers,
+      body: JSON.stringify({
+        name: name,
+        link: link
+      })
     })
     .then((res) => this._errorHendler(res))
   }

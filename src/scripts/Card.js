@@ -1,5 +1,5 @@
 export default class Card {
-  constructor({cardDate, handleCardClick, handleLikeClick, hendleDeleteIconClick}, cardSelector) {
+  constructor({cardDate, handleCardClick, handleLikeClick, hendleDeleteIconClick}, cardSelector, isDeleted, likes) {
     this._name = cardDate.name;
     this._link = cardDate.link;
     this._id = cardDate._id;
@@ -7,6 +7,8 @@ export default class Card {
     this._handleLikeClick = handleLikeClick;
     this._hendleDeleteIconClick = hendleDeleteIconClick;
     this._cardSelector = cardSelector;
+    this._isDeleted = isDeleted;
+    this._likes = likes;
   }
 
   _getTemplate() {
@@ -23,6 +25,11 @@ export default class Card {
     this._element = this._getTemplate();
     const cardElementPhoto = this._element.querySelector(".card__photo");
 
+    if (!this._isDeleted) {
+      this._element.querySelector('.card__delete').style.display = 'none';
+    }
+    console.log(this._likes);
+    this._element.querySelector(".card__count-likes").textContent = this._likes;
     this._element.querySelector(".card__caption").textContent = this._name;
     cardElementPhoto.setAttribute("src", this._link);
     cardElementPhoto.setAttribute("alt", this._name);
@@ -40,12 +47,13 @@ export default class Card {
   _removeCard = (evt) => {
     const card = evt.currentTarget.closest(".card");
     this._hendleDeleteIconClick(card, this._id);
-    //card.remove();
   }
 
   _likeCard = (evt) => {
     const heart = evt.currentTarget;
     heart.classList.toggle("card__heart_active");
+    console.log(evt);
+    this._handleLikeClick(evt)
   }
 }
 

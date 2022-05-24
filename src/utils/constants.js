@@ -25,4 +25,4 @@ export const profilePopupElementJob = profilePopup.querySelector(
   ".popup__input_type_job"
 );
 export const cardsSelector = ".cards";
-
+export const removeCardPopupSelector = ".popup_delete-card";

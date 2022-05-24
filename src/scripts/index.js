@@ -21,8 +21,10 @@ import {
   settings,
   buttonEditAvatar,
   avatarPopupSelector,
-  profileAvatar
+  profileAvatar,
+  removeCardPopupSelector
 } from '../utils/constants.js';
+import PopupWithConfirmation from './PopupWithConfirmation';
 
 var userId = '';
 
@@ -42,7 +44,11 @@ api.getAllData()
     userId = userData._id;
 
     cardsData.forEach(item =>{
-      renderCard.addItem(createCard(item));
+      var isDeleted = false;
+      if (item.owner._id === userId) {isDeleted = true};
+      const likes = item.likes.length;
+
+      renderCard.addItem(createCard(item, isDeleted, likes));
     })
   })
   .catch((err) => {
@@ -56,19 +62,19 @@ const renderCard = new Section({
   }
 }, cardsSelector);
 
-function createCard(item) {
+function createCard(item, isDeleted, likes) {
   const card = new Card({
     cardDate: item,
     handleCardClick: (evt) => {
       popupImage.open(evt.target.alt, evt.target.src);
     },
     handleLikeClick: (card) => {
-      console.log(card);
+
     },
-    hendleDeleteIconClick: (card, id) => {
-      console.log(id);
+    hendleDeleteIconClick: (card, id, evt) => {
+      popupRemoveCard.open();
     }
-  },'.card-template');
+  },'.card-template', isDeleted, likes);
   const cardElement = card.createCard();
   return cardElement;
 }
@@ -97,14 +103,45 @@ popupEditAvatar.setEventListeners();
 
 const popupNewCard = new PopupWithForm({
   popupSelector: cardPopupSelector,
-  onSubmit: (inputValue) => {
-    alert(userId);
-    renderCard.addItem(createCard({name: inputValue.titleInput, link: inputValue.linkInput}));
+  onSubmit: (inputValue, evt) => {
+    renderLoading(true, evt);
+    api.addCard(inputValue.titleInput, inputValue.linkInput)
+      .then((data)=>{
+        renderCard.addItem(createCard({name: data.name, link: data.link}, true));
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(()=>{
+        popupNewCard.close();
+        renderLoading(false, evt);
+      })
   }
 });
 popupNewCard.setEventListeners();
 
 const userInfo = new UserInfo({name: ".profile__name", job: ".profile__profession"}, api);
+
+const popupRemoveCard = new PopupWithConfirmation({
+  popupSelector: removeCardPopupSelector,
+  onSubmit: (evt) => {
+    console.log(evt);
+    renderLoading(true, evt);
+    api.removeCard(id)
+      .then(() =>{
+        card.remove();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(()=>{
+        popupRemoveCard.close();
+        renderLoading(false, evt);
+      })
+  }
+});
+
+popupRemoveCard.setEventListeners();
 
 const popupProfile = new PopupWithForm({
   popupSelector: profilePopupSelector,
@@ -166,7 +203,7 @@ enableValidation(settings);
 
 function renderLoading(isLoading, evt) {
   if (isLoading) {
-    console.log();
+    console.log(evt);
     evt.target.querySelector('.default').style.display = 'none';
     evt.target.querySelector('.loading').style.display = '';
     evt.target.querySelector('.popup__submit').setAttribute("disabled", "disabled");
