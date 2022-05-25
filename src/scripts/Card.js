@@ -1,5 +1,11 @@
 export default class Card {
-  constructor({cardDate, handleCardClick, handleLikeClick, hendleDeleteIconClick}, cardSelector, isDeleted, likes, setLike) {
+  constructor(
+    { cardDate, handleCardClick, handleLikeClick, hendleDeleteIconClick },
+    cardSelector,
+    canDeleted,
+    likes,
+    setLike
+  ) {
     this._name = cardDate.name;
     this._link = cardDate.link;
     this._id = cardDate._id;
@@ -8,7 +14,7 @@ export default class Card {
     this._handleLikeClick = handleLikeClick;
     this._hendleDeleteIconClick = hendleDeleteIconClick;
     this._cardSelector = cardSelector;
-    this._isDeleted = isDeleted;
+    this._canDeleted = canDeleted;
     this._likes = likes;
     this._setLike = setLike;
   }
@@ -16,8 +22,7 @@ export default class Card {
   _getTemplate() {
     const cardElement = document
       .querySelector(this._cardSelector)
-      .content
-      .querySelector('.card')
+      .content.querySelector(".card")
       .cloneNode(true);
 
     return cardElement;
@@ -27,11 +32,13 @@ export default class Card {
     this._element = this._getTemplate();
     const cardElementPhoto = this._element.querySelector(".card__photo");
 
-    if (!this._isDeleted) {
-      this._element.querySelector('.card__delete').style.display = 'none';
+    if (!this._canDeleted) {
+      this._element.querySelector(".card__delete").style.display = "none";
     }
-    if (this._setLike){
-      this._element.querySelector('.card__heart').classList.add("card__heart_active");
+    if (this._setLike) {
+      this._element
+        .querySelector(".card__heart")
+        .classList.add("card__heart_active");
     }
 
     this._element.querySelector(".card__count-likes").textContent = this._likes;
@@ -44,21 +51,24 @@ export default class Card {
   }
 
   _setCardActionsListener() {
-    this._element.querySelector(".card__delete").addEventListener("click", this._removeCard);
-    this._element.querySelector(".card__heart").addEventListener("click", this._likeCard);
-    this._element.querySelector(".card__photo").addEventListener("click", this._handleCardClick);
+    this._element
+      .querySelector(".card__delete")
+      .addEventListener("click", this._removeCard);
+    this._element
+      .querySelector(".card__heart")
+      .addEventListener("click", this._likeCard);
+    this._element
+      .querySelector(".card__photo")
+      .addEventListener("click", this._handleCardClick);
   }
 
   _removeCard = (evt) => {
     const card = evt.currentTarget.closest(".card");
     this._hendleDeleteIconClick(card, this._id);
-  }
+  };
 
   _likeCard = (evt) => {
-    // const heart = evt.currentTarget;
-    // heart.classList.toggle("card__heart_active");
-    const card = evt.target.closest('.card');
+    const card = evt.target.closest(".card");
     this._handleLikeClick(card, this._card);
-  }
+  };
 }
-
