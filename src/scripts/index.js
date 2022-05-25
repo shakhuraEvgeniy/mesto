@@ -72,7 +72,6 @@ function createCard(item, isDeleted, likes, setLike) {
       if (!card.querySelector('.card__heart_active')){
         api.setLike(cardData._id)
         .then((data)=>{
-          console.log(data);
           card.querySelector('.card__heart').classList.add("card__heart_active");
           card.querySelector(".card__count-likes").textContent = data.likes.length;
         })
@@ -82,7 +81,6 @@ function createCard(item, isDeleted, likes, setLike) {
       } else {
         api.removeLike(cardData._id)
         .then((data)=>{
-          console.log(data);
           card.querySelector('.card__heart').classList.remove("card__heart_active");
           card.querySelector(".card__count-likes").textContent = data.likes.length;
         })
@@ -90,11 +88,26 @@ function createCard(item, isDeleted, likes, setLike) {
           console.log(err);
         })
       }
-
-
-
     },
-    hendleDeleteIconClick: (card, id, evt) => {
+    hendleDeleteIconClick: (card, id) => {
+      const popupRemoveCard = new PopupWithConfirmation({
+        popupSelector: removeCardPopupSelector,
+        onSubmit: (evt) => {
+          renderLoading(true, evt);
+          api.removeCard(id)
+            .then(() =>{
+              card.remove();
+            })
+            .catch((err) => {
+              console.log(err);
+            })
+            .finally(()=>{
+              popupRemoveCard.close();
+              renderLoading(false, evt);
+            })
+        }
+      });
+      popupRemoveCard.setEventListeners();
       popupRemoveCard.open();
     }
   },'.card-template', isDeleted, likes, setLike);
@@ -146,27 +159,6 @@ const popupNewCard = new PopupWithForm({
 popupNewCard.setEventListeners();
 
 const userInfo = new UserInfo({name: ".profile__name", job: ".profile__profession"}, api);
-
-const popupRemoveCard = new PopupWithConfirmation({
-  popupSelector: removeCardPopupSelector,
-  onSubmit: (evt) => {
-    console.log(evt);
-    renderLoading(true, evt);
-    api.removeCard(id)
-      .then(() =>{
-        card.remove();
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(()=>{
-        popupRemoveCard.close();
-        renderLoading(false, evt);
-      })
-  }
-});
-
-popupRemoveCard.setEventListeners();
 
 const popupProfile = new PopupWithForm({
   popupSelector: profilePopupSelector,
@@ -228,7 +220,6 @@ enableValidation(settings);
 
 function renderLoading(isLoading, evt) {
   if (isLoading) {
-    console.log(evt);
     evt.target.querySelector('.default').style.display = 'none';
     evt.target.querySelector('.loading').style.display = '';
     evt.target.querySelector('.popup__submit').setAttribute("disabled", "disabled");
