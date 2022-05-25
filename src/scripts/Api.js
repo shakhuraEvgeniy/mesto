@@ -71,4 +71,20 @@ export default class Api{
     })
     .then((res) => this._errorHendler(res))
   }
+
+  setLike(id){
+    return fetch(`${this._url}/cards/${id}/likes`, {
+      method: 'PUT',
+      headers: this._headers,
+    })
+    .then((res) => this._errorHendler(res))
+  }
+
+  removeLike(id){
+    return fetch(`${this._url}/cards/${id}/likes`, {
+      method: 'DELETE',
+      headers: this._headers,
+    })
+    .then((res) => this._errorHendler(res))
+  }
 }

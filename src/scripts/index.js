@@ -45,10 +45,10 @@ api.getAllData()
 
     cardsData.forEach(item =>{
       var isDeleted = false;
-      if (item.owner._id === userId) {isDeleted = true};
+      if (item.owner._id == userId) {isDeleted = true};
       const likes = item.likes.length;
-
-      renderCard.addItem(createCard(item, isDeleted, likes));
+      const setLike = item.likes.some((item)=>{return item._id == userId})
+      renderCard.addItem(createCard(item, isDeleted, likes, setLike));
     })
   })
   .catch((err) => {
@@ -62,19 +62,42 @@ const renderCard = new Section({
   }
 }, cardsSelector);
 
-function createCard(item, isDeleted, likes) {
+function createCard(item, isDeleted, likes, setLike) {
   const card = new Card({
     cardDate: item,
     handleCardClick: (evt) => {
       popupImage.open(evt.target.alt, evt.target.src);
     },
-    handleLikeClick: (card) => {
+    handleLikeClick: (card, cardData) => {
+      if (!card.querySelector('.card__heart_active')){
+        api.setLike(cardData._id)
+        .then((data)=>{
+          console.log(data);
+          card.querySelector('.card__heart').classList.add("card__heart_active");
+          card.querySelector(".card__count-likes").textContent = data.likes.length;
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+      } else {
+        api.removeLike(cardData._id)
+        .then((data)=>{
+          console.log(data);
+          card.querySelector('.card__heart').classList.remove("card__heart_active");
+          card.querySelector(".card__count-likes").textContent = data.likes.length;
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+      }
+
+
 
     },
     hendleDeleteIconClick: (card, id, evt) => {
       popupRemoveCard.open();
     }
-  },'.card-template', isDeleted, likes);
+  },'.card-template', isDeleted, likes, setLike);
   const cardElement = card.createCard();
   return cardElement;
 }
@@ -107,7 +130,9 @@ const popupNewCard = new PopupWithForm({
     renderLoading(true, evt);
     api.addCard(inputValue.titleInput, inputValue.linkInput)
       .then((data)=>{
-        renderCard.addItem(createCard({name: data.name, link: data.link}, true));
+        const likes = data.likes.length;
+        const setLike = data.likes.some((item)=>{return item._id == userId})
+        renderCard.addItem(createCard(data, true, likes, setLike));
       })
       .catch((err) => {
         console.log(err);

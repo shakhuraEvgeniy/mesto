@@ -1,14 +1,16 @@
 export default class Card {
-  constructor({cardDate, handleCardClick, handleLikeClick, hendleDeleteIconClick}, cardSelector, isDeleted, likes) {
+  constructor({cardDate, handleCardClick, handleLikeClick, hendleDeleteIconClick}, cardSelector, isDeleted, likes, setLike) {
     this._name = cardDate.name;
     this._link = cardDate.link;
     this._id = cardDate._id;
+    this._card = cardDate;
     this._handleCardClick = handleCardClick;
     this._handleLikeClick = handleLikeClick;
     this._hendleDeleteIconClick = hendleDeleteIconClick;
     this._cardSelector = cardSelector;
     this._isDeleted = isDeleted;
     this._likes = likes;
+    this._setLike = setLike;
   }
 
   _getTemplate() {
@@ -28,7 +30,10 @@ export default class Card {
     if (!this._isDeleted) {
       this._element.querySelector('.card__delete').style.display = 'none';
     }
-    console.log(this._likes);
+    if (this._setLike){
+      this._element.querySelector('.card__heart').classList.add("card__heart_active");
+    }
+
     this._element.querySelector(".card__count-likes").textContent = this._likes;
     this._element.querySelector(".card__caption").textContent = this._name;
     cardElementPhoto.setAttribute("src", this._link);
@@ -50,10 +55,10 @@ export default class Card {
   }
 
   _likeCard = (evt) => {
-    const heart = evt.currentTarget;
-    heart.classList.toggle("card__heart_active");
-    console.log(evt);
-    this._handleLikeClick(evt)
+    // const heart = evt.currentTarget;
+    // heart.classList.toggle("card__heart_active");
+    const card = evt.target.closest('.card');
+    this._handleLikeClick(card, this._card);
   }
 }
 
