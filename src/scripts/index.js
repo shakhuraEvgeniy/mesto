@@ -69,8 +69,9 @@ function createCard(item, isDeleted, likes, setLike) {
       popupImage.open(evt.target.alt, evt.target.src);
     },
     handleLikeClick: (card, cardData) => {
+      const id = cardData._id;
       if (!card.querySelector('.card__heart_active')){
-        api.setLike(cardData._id)
+        api.setLike(id)
         .then((data)=>{
           card.querySelector('.card__heart').classList.add("card__heart_active");
           card.querySelector(".card__count-likes").textContent = data.likes.length;
@@ -79,7 +80,7 @@ function createCard(item, isDeleted, likes, setLike) {
           console.log(err);
         })
       } else {
-        api.removeLike(cardData._id)
+        api.removeLike(id)
         .then((data)=>{
           card.querySelector('.card__heart').classList.remove("card__heart_active");
           card.querySelector(".card__count-likes").textContent = data.likes.length;
