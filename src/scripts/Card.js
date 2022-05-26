@@ -50,16 +50,19 @@ export default class Card {
     return this._element;
   }
 
+  _event = (evt) =>{
+    if (evt.target.classList.contains("card__heart")){
+      this._likeCard(evt)
+    } else if (evt.target.classList.contains("card__delete")){
+      this._removeCard(evt)
+    } else if (evt.target.classList.contains("card__photo")){
+      this._handleCardClick(evt);
+    }
+  }
+
   _setCardActionsListener() {
     this._element
-      .querySelector(".card__delete")
-      .addEventListener("click", this._removeCard);
-    this._element
-      .querySelector(".card__heart")
-      .addEventListener("click", this._likeCard);
-    this._element
-      .querySelector(".card__photo")
-      .addEventListener("click", this._handleCardClick);
+      .addEventListener("click", this._event);
   }
 
   _removeCard = (evt) => {

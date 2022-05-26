@@ -73,13 +73,13 @@ function handleLikeClick(card, cardData) {
     return api
       .setLike(cardData._id)
       .then((data) => {
-          return data.likes.length;
+        return data.likes.length;
       })
       .catch((err) => {
         console.log(err);
       });
   } else {
-     return api
+    return api
       .removeLike(cardData._id)
       .then((data) => {
         return data.likes.length;
@@ -99,12 +99,12 @@ function hendleDeleteIconClick(card, id) {
         .removeCard(id)
         .then(() => {
           card.remove();
+          popupRemoveCard.close();
         })
         .catch((err) => {
           console.log(err);
         })
         .finally(() => {
-          popupRemoveCard.close();
           renderLoading(false, evt);
         });
     },
@@ -151,12 +151,12 @@ const popupEditAvatar = new PopupWithForm({
       .setAvatar(inputValue.linkInput)
       .then((data) => {
         profileAvatar.style.backgroundImage = `url('${data.avatar}')`;
+        popupEditAvatar.close();
       })
       .catch((err) => {
         console.log(err);
       })
       .finally(() => {
-        popupEditAvatar.close();
         renderLoading(false, evt);
       });
   },
@@ -175,21 +175,22 @@ const popupNewCard = new PopupWithForm({
           return item._id === userId;
         });
         renderCard.addItem(createCard(data, true, likes, isLiked));
+        popupNewCard.close();
       })
       .catch((err) => {
         console.log(err);
       })
       .finally(() => {
-        popupNewCard.close();
         renderLoading(false, evt);
       });
   },
 });
 popupNewCard.setEventListeners();
 
-const userInfo = new UserInfo(
-  { name: ".profile__name", job: ".profile__profession" }
-);
+const userInfo = new UserInfo({
+  name: ".profile__name",
+  job: ".profile__profession",
+});
 
 const popupProfile = new PopupWithForm({
   popupSelector: profilePopupSelector,
@@ -199,12 +200,12 @@ const popupProfile = new PopupWithForm({
       .setUserInfo({ name: inputValue.nameInput, about: inputValue.jobInput })
       .then((data) => {
         userInfo.setUserInfo(data.name, data.about);
+        popupProfile.close();
       })
       .catch((err) => {
         console.log(err);
       })
       .finally(() => {
-        popupProfile.close();
         renderLoading(false, evt);
       });
   },
