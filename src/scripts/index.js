@@ -70,25 +70,19 @@ const renderCard = new Section(
 
 function handleLikeClick(card, cardData) {
   if (!card.querySelector(".card__heart_active")) {
-    api
+    return api
       .setLike(cardData._id)
       .then((data) => {
-        card.querySelector(".card__heart").classList.add("card__heart_active");
-        card.querySelector(".card__count-likes").textContent =
-          data.likes.length;
+          return data.likes.length;
       })
       .catch((err) => {
         console.log(err);
       });
   } else {
-    api
+     return api
       .removeLike(cardData._id)
       .then((data) => {
-        card
-          .querySelector(".card__heart")
-          .classList.remove("card__heart_active");
-        card.querySelector(".card__count-likes").textContent =
-          data.likes.length;
+        return data.likes.length;
       })
       .catch((err) => {
         console.log(err);
@@ -127,7 +121,7 @@ function createCard(item, canDeleted, likes, isLiked) {
         popupImage.open(evt.target.alt, evt.target.src);
       },
       handleLikeClick: (card, cardData) => {
-        handleLikeClick(card, cardData);
+        return handleLikeClick(card, cardData);
       },
       hendleDeleteIconClick: (card, id) => {
         hendleDeleteIconClick(card, id);
@@ -194,8 +188,7 @@ const popupNewCard = new PopupWithForm({
 popupNewCard.setEventListeners();
 
 const userInfo = new UserInfo(
-  { name: ".profile__name", job: ".profile__profession" },
-  api
+  { name: ".profile__name", job: ".profile__profession" }
 );
 
 const popupProfile = new PopupWithForm({

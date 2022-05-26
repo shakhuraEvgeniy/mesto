@@ -69,6 +69,11 @@ export default class Card {
 
   _likeCard = (evt) => {
     const card = evt.target.closest(".card");
-    this._handleLikeClick(card, this._card);
+    this._handleLikeClick(card, this._card)
+      .then((count) => {
+        card.querySelector(".card__heart").classList.toggle("card__heart_active");
+        card.querySelector(".card__count-likes").textContent =
+          count;
+      })
   };
 }
