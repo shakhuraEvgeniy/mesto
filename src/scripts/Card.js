@@ -50,7 +50,7 @@ export default class Card {
     return this._element;
   }
 
-  _event = (evt) =>{
+  _heandleClickEvent = (evt) =>{
     if (evt.target.classList.contains("card__heart")){
       this._likeCard(evt)
     } else if (evt.target.classList.contains("card__delete")){
@@ -62,7 +62,7 @@ export default class Card {
 
   _setCardActionsListener() {
     this._element
-      .addEventListener("click", this._event);
+      .addEventListener("click", this._heandleClickEvent);
   }
 
   _removeCard = (evt) => {
